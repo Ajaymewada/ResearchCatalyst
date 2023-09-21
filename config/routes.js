@@ -65,6 +65,10 @@ router.get('/editorial-board', function (req, res) {
     res.render('MainEditorialBoard');
 })
 
+router.get('/editors-management', authMiddleware, function (req, res) {
+    res.render('EditorsManagement');
+})
+
 router.get('/author-guide', function (req, res) {
     res.render('MainAuthorGuide');
 })

@@ -38,6 +38,11 @@ var mainMenuLinks = [
         icon: "ti ti-user-circle"
     },
     {
+        title: "Editors &nbsp; Management",
+        link: "/editors-management",
+        icon: "ti ti-user-circle"
+    },
+    {
         title: "Instructions &nbsp; For &nbsp; Authors",
         link: "/instructions",
         icon: "ti ti-aperture"
