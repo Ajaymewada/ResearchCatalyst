@@ -1,0 +1,18 @@
+.primaryBtnCs {
+    height: 45px;
+    font-size: 16px;
+}
+.dashed-border {
+    border: 2px dashed #ccc;
+    padding: 20px;
+}
+.tag-editor{
+    min-height: 40px;
+    height: auto;
+    font-size: 20px;
+    border: 1px solid #d2cfcf;
+    border-radius: 6px;
+}
+.tag-editor .tag-editor-tag,.tag-editor-delete{
+    padding: 6px !important;
+}
