@@ -1,3 +1,4 @@
+var mongoose = require('mongoose');
 const EditorialBoard = require('../Modals/editorialboardModel'); // Replace with the correct path to your Mongoose model
 
 async function saveEditorialBoard(req, res) {
@@ -6,7 +7,7 @@ async function saveEditorialBoard(req, res) {
         if (editorialBoardData && editorialBoardData.keywords) {
             editorialBoardData.keywords = JSON.parse(editorialBoardData.keywords)
         }
-        if(req.file){
+        if (req.file) {
             editorialBoardData.image = `editorsImages/${req.file.filename}`
         }
         const editorialBoard = await new EditorialBoard(editorialBoardData);
@@ -42,7 +43,52 @@ async function getEditorialBoard(req, res) {
     }
 }
 
+async function updateEditorialBoard(req, res) {
+    let querytoset = {
+        name: req.body.name,
+        affiliation: req.body.affiliation,
+        biography: req.body.biography
+    }
+    EditorialBoard.findByIdAndUpdate({ _id: new mongoose.Types.ObjectId(req.body._id) }, querytoset, (err, doc) => {
+        if (err) {
+            res.status(500).json({
+                msg: "Failed to Update!",
+                status: false,
+                data: {}
+            })
+        } else {
+            res.status(200).json({
+                msg: "Updated Successfully!",
+                status: true,
+                data: doc
+            })
+        }
+    });
+}
+
+async function searcheditorialboard(req, res) {
+    EditorialBoard.find({
+        name: { $regex: new RegExp(req.body.name, 'i') }
+    }, (err, doc) => {
+        if (err) {
+            res.status(500).json({
+                msg: "No Data",
+                status: false,
+                data: {}
+            })
+        } else {
+            res.status(200).json({
+                msg: "Data Found!",
+                status: true,
+                data: doc
+            })
+        }
+    })
+}
+
 module.exports = {
     saveEditorialBoard,
-    getEditorialBoard
+    getEditorialBoard,
+    updateEditorialBoard,
+    searcheditorialboard
 };

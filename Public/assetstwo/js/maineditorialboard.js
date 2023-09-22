@@ -36,7 +36,7 @@ function getData() {
                                                                             </div>
 
                                                                             <div class="content">
-                                                                                <h5 class="title">${name}</h5>
+                                                                                <h5 class="title" title="${name}">${name}</h5>
                                                                                 <span class="designation">${affiliation}</span>
                                                                                 <button type="button" 
                                                                                 class="btn bg-primarycolor text-white"

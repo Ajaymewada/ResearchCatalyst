@@ -16,3 +16,20 @@
 .tag-editor .tag-editor-tag,.tag-editor-delete{
     padding: 6px !important;
 }
+
+
+.loader{
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    top: 40%;
+    right: 40%;
+    border: 8px solid #5d87ff; /* Light blue color */
+    border-top: 8px solid transparent; /* Transparent top border */
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

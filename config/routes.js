@@ -116,6 +116,8 @@ router.post('/addjournal', addjournal.saveJournal);
 router.post('/aimsandscope', aimsandscope.saveAimAndScope);
 router.post('/processingcharge', processingcharge.saveProcessingCharge);
 router.post('/editorialboard', upload2.single("files"), editorialboard.saveEditorialBoard);
+router.post('/editorialboardupdate', editorialboard.updateEditorialBoard);
+router.post('/searcheditorialboard', editorialboard.searcheditorialboard);
 router.post('/instructionsforauthor', instructions.saveInstructionsForAuthor);
 router.post('/uploadCoverBanner', upload.single("files"), addjournal.savecoverbanner);
 router.get('/getcoverbanner', addjournal.getcoverbanner)
