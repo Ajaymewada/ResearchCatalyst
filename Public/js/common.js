@@ -66,3 +66,10 @@ setInterval(checkLogout, 1000);
 // // Check every 1 minute (adjust interval as needed)
 // setInterval(checkAutoLogout, 60000); // 1 minute in milliseconds
 
+$(() => {
+    let username = localStorage.getItem('username');
+    if(username != null && username != ""){
+        username = username.charAt(0).toLocaleUpperCase() + username.substr(1);
+        $(".userName").text(username)
+    }
+})
