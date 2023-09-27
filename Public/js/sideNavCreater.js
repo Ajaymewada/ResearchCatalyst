@@ -53,6 +53,18 @@ var mainMenuLinks = [
         icon: "ti ti-currency-dollar"
     },
 ]
+var articleAddLinks = [
+    {
+        title: "Add Article",
+        link: "/article",
+        icon: "ti ti-list-details"
+    },
+    {
+        title: "Article Management",
+        link: "/manage-article",
+        icon: "ti ti-cards"
+    },
+]
 class GenerateSideNav {
     constructor() {
         // Constructor, if needed
@@ -61,9 +73,11 @@ class GenerateSideNav {
         let ListItem = ""
         var links = []
         if (page == "usefullLinks") {
-            links = usefullLinks
+            links = usefullLinks;
         } else if(page == "mainMenu") {
-            links = mainMenuLinks
+            links = mainMenuLinks;
+        } else if(page == "articlelinks"){
+            links = articleAddLinks;
         }
         links.forEach(element => {
             if (element.title === activeTxt) {

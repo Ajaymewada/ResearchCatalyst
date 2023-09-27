@@ -4,8 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Add Article</title>
     <link id="themeColors" rel="stylesheet" href="assets/css/style.min.css" />
+    <link id="themeColors" rel="stylesheet" href="assets/jQuery-tagEditor-master/jquery.tag-editor.css" />
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="shortcut icon" type="image/x-icon" href="assetstwo/images/favicon.png">
 </head>
 
 <body>
@@ -26,44 +29,13 @@
                 </div>
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav scroll-sidebar" data-simplebar>
-                    <ul id="sidebarnav">
+                    <ul>
                         <li class="nav-small-cap">
                             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                             <span class="hide-menu"></span>
                         </li>
-                        <li class="sidebar-item ">
-                            <a class="sidebar-link active" href="#" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-activity-heartbeat"></i>
-                                </span>
-                                <span class="hide-menu">Basic Information</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="#" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-user-circle"></i>
-                                </span>
-                                <span class="hide-menu">Authors &nbsp; List</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="/abstract" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-aperture"></i>
-                                </span>
-                                <span class="hide-menu">Abstract</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="#" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-currency-dollar"></i>
-                                </span>
-                                <span class="hide-menu">Upload &nbsp; PDF</span>
-                            </a>
-                        </li>
                     </ul>
+                    <ul id="sidebarnav"></ul>
                 </nav>
                 <!-- End Sidebar navigation -->
             </div>
@@ -77,8 +49,67 @@
             {% block header %}{% endblock %}
             <!--  Header End -->
             <div class="container-fluid">
-                
+                <div class="row">
+                    <div class="col-lg-12 d-flex align-items-stretch" style="height: 228px;">
+                        <div class="card w-100 bg-light-info overflow-hidden shadow-none">
+                            <div class="card-body position-relative">
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <div class="d-flex align-items-center mb-7">
+                                            <div class="rounded-circle overflow-hidden me-6">
+                                                <img src="assets/images/profile/user-1.jpg" alt="" width="40"
+                                                    height="40">
+                                            </div>
+                                            <h5 class="fw-semibold mb-0 fs-5">Welcome back Admin!</h5>
+                                        </div>
+                                        <div class="d-flex align-items-center">
 
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="welcome-bg-img mb-n7 text-end">
+                                            <img src="assets/images/profile/mainuser.png" alt="" class="img-fluid"
+                                                width="240px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="row">
+                            <h3 class="my-3">Add Article <i class="fa-solid fa-circle-info" title=""></i></h3>
+                            <div class="col-md-12 col-sm-12 col-12 my-4">
+                                <label for="">Article Title <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="articleTitle">
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-12 my-4">
+                                <label for="">Author Names <span class="text-danger">*</span></label>
+                                <input type="text" id="authorNames">
+                            </div>
+
+                            <div class="col-md-12 my-4" id="articleAbstractContainer"></div>
+                            <div class="col-md-12 my-4" id="articleCitationContainer"></div>
+                            <div class="col-md-6 col-sm-12 col-12 my-4">
+                                <label for="">Upload PDF <span class="text-danger">*</span></label>
+                                <input type="file" accept=".pdf" class="form-control" id="articlePDFFile">
+                            </div>
+                            <div class="col-md-12">
+                                <div class="alert alert-danger validationalert d-none" role="alert"></div>
+                                <button class="btn btn-primary float-end primaryBtnCs" onclick="saveData()"
+                                    style="display: flex;align-items: center;justify-content: space-between;">
+                                    <span style="margin-right: 10px;">Save Article</span>
+                                    <div class="spinner-border text-light saveinprogress d-none" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </button>
+                            </div>
+                            <div class="col-12 my-4"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -97,6 +128,12 @@
     <script src="assets/libs/owl.carousel/dist/owl.carousel.min.js"></script>
     <!-- <script src="assets/libs/apexcharts/dist/apexcharts.min.js"></script> -->
     <script src="assets/js/dashboard.js"></script>
+    <script src="assets/ckeditor/ckeditor.js"></script>
+    <script src="assets/jQuery-tagEditor-master/jquery.tag-editor.min.js"></script>
+    <script src="js/ckEditorClass.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/sideNavCreater.js"></script>
+    <script src="js/addarticle.js"></script>
 </body>
 
 </html>

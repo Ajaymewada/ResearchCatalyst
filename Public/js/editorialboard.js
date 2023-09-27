@@ -46,7 +46,7 @@ function getData() {
                 // if (keywords && Array.isArray(keywords) && keywords.length) {
                 //     $('#TagsID').tagEditor('destroy');
                 //     $('#TagsID').tagEditor({
-                //         delimiter: ' ', /* space and comma */
+                //         delimiter: '', /* space and comma */
                 //         forceLowercase: false,
                 //         initialTags: keywords
                 //     });

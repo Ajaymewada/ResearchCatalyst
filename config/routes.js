@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var adminauth = require('../App/controllers/adminauth')
 var addjournal = require('../App/controllers/addjournal')
+var addarticle = require('../App/controllers/artcleController')
 var aimsandscope = require('../App/controllers/aimsandscope')
 var editorialboard = require('../App/controllers/editorialboard')
 var instructions = require('../App/controllers/instructions')
@@ -17,12 +18,12 @@ router.get('/', function (req, res) {
 router.get('/admin', authMiddleware, function (req, res) {
     res.render('AddJournal');
 })
-router.get('/article', function (req, res) {
+router.get('/article', authMiddleware, function (req, res) {
     res.render('Article');
 })
 
-router.get('/abstract', function (req, res) {
-    res.render('Abstract');
+router.get('/manage-article', authMiddleware, function (req, res) {
+    res.render('ArticleManage');
 })
 
 router.get('/coverbanner', authMiddleware, function (req, res) {
@@ -110,6 +111,20 @@ const storage2 = multer.diskStorage({
 const upload2 = multer({
     storage: storage2
 })
+
+const storage3 = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './Public/artcilePDFFile/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname)
+    }
+})
+
+const upload3 = multer({
+    storage: storage3
+})
+
 router.post('/adminregister', adminauth.registerAdmin);
 router.post('/adminlogin', adminauth.loginAdmin);
 router.post('/addjournal', addjournal.saveJournal);
@@ -126,6 +141,15 @@ router.get('/getaims-and-scope', aimsandscope.getAimsAndScope);
 router.get('/getEditorialBoard', editorialboard.getEditorialBoard);
 router.get('/getInstructionsForAuthor', instructions.getInstructionsForAuthor);
 router.get('/getProcessingCharge', processingcharge.getProcessingCharge);
+
+// Article Related Link Start
+router.post('/addsaveArticle', upload3.single("files"), addarticle.saveArticle);
+router.post('/addupdateArticle', addarticle.updateArticle);
+router.get('/getAllArticle', addarticle.getAticles);
+router.post('/getArticlesPaginationWise', addarticle.getArticlesPaginationWise);
+router.post('/searchArticle', addarticle.searchArticle);
+// Article Related Link End
+
 // Logout route
 router.post('/logout', async (req, res) => {
     try {

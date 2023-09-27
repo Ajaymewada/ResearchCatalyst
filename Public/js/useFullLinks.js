@@ -25,6 +25,6 @@ forauthor.initEditor(sourceID1);
 description.initEditor(sourceID2);
 
 $('#TagsID').tagEditor({
-    delimiter: ' ', /* space and comma */
+    delimiter: '', /* space and comma */
     forceLowercase: false,
 }); 
