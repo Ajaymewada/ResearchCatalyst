@@ -1,6 +1,8 @@
 document.title = "Add Article";
 const sideListCls = new GenerateSideNav();
 const sideList = sideListCls.create("articlelinks", "Add Article");
+const mobilesideList = sideListCls.createMobileNav();
+$(".MobileSideNavBarContainer").html(mobilesideList);
 $("#sidebarnav").html(sideList);
 
 $('#authorNames').tagEditor({

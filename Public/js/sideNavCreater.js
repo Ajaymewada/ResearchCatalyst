@@ -69,14 +69,14 @@ class GenerateSideNav {
     constructor() {
         // Constructor, if needed
     }
-    create(page,activeTxt) {
+    create(page, activeTxt) {
         let ListItem = ""
         var links = []
         if (page == "usefullLinks") {
             links = usefullLinks;
-        } else if(page == "mainMenu") {
+        } else if (page == "mainMenu") {
             links = mainMenuLinks;
-        } else if(page == "articlelinks"){
+        } else if (page == "articlelinks") {
             links = articleAddLinks;
         }
         links.forEach(element => {
@@ -102,6 +102,83 @@ class GenerateSideNav {
 
         });
         return ListItem;
+    }
+
+    createMobileNav() {
+        let finalLinks = ""
+        let menulinks = ""
+        let articlelinks= ""
+        let usefulllinks = ""
+        mainMenuLinks.forEach(element => {
+            menulinks += `<li class="sidebar-item py-2">
+                                <a href="#" onclick="navigatetopage('${element.link}')" class="d-flex align-items-center">
+                                    <div class="bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                        <i class="${element.icon}"></i>
+                                    </div>
+                                    <div class="d-inline-block active">
+                                        <h6 class="mb-1 bg-hover-primary">${element.title}</h6>
+                                    </div>
+                                </a>
+                            </li>`
+        });
+        articleAddLinks.forEach(element => {
+            articlelinks += `<li class="sidebar-item py-2">
+                                <a href="#" onclick="navigatetopage('${element.link}')" class="d-flex align-items-center">
+                                    <div class="bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                        <i class="${element.icon}"></i>
+                                    </div>
+                                    <div class="d-inline-block active">
+                                        <h6 class="mb-1 bg-hover-primary">${element.title}</h6>
+                                    </div>
+                                </a>
+                            </li>`
+        });
+        usefullLinks.forEach(element => {
+            usefulllinks += `<li class="sidebar-item py-2">
+                                <a href="#" onclick="navigatetopage('${element.link}')" class="d-flex align-items-center">
+                                    <div class="bg-light rounded-1 me-3 p-6 d-flex align-items-center justify-content-center">
+                                        <i class="${element.icon}"></i>
+                                    </div>
+                                    <div class="d-inline-block active">
+                                        <h6 class="mb-1 bg-hover-primary">${element.title}</h6>
+                                    </div>
+                                </a>
+                            </li>`
+        });
+        finalLinks += `<li class="sidebar-item">
+                    <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-apps"></i>
+                        </span>
+                        <span class="hide-menu">Main Menu</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level my-3" id="mainMenuSidebar">
+                        ${menulinks}
+                    </ul>
+                </li>`
+        finalLinks += `<li class="sidebar-item">
+                    <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-apps"></i>
+                        </span>
+                        <span class="hide-menu">Article</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level my-3" id="mainMenuSidebar">
+                        ${articlelinks}
+                    </ul>
+                </li>`
+        finalLinks += `<li class="sidebar-item">
+                    <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-apps"></i>
+                        </span>
+                        <span class="hide-menu">Use Full Links</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level my-3" id="mainMenuSidebar">
+                        ${usefulllinks}
+                    </ul>
+                </li>`                
+        return finalLinks;
     }
 
 }

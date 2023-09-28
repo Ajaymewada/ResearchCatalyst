@@ -55,7 +55,7 @@
                     {% include './DescriptionAndKeywords.html' %}
                     {% block metaPart %}{% endblock %}
                     <div class="col-md-12 col-sm-12 col-12">
-                                                        <div class="alert alert-danger validationalert d-none" role="alert"></div>
+                        <div class="alert alert-danger validationalert d-none" role="alert"></div>
 
                         <button class="btn btn-primary primaryBtnCs float-end" onclick="saveData()">Save</button>
                     </div>
@@ -64,7 +64,8 @@
             </div>
         </div>
     </div>
-
+    {% include './MobileSideNavbar.html' %}
+    {% block MobileSideNavbar %}{% endblock %}
     <!-- JS FILES -->
     <script src="assets/libs/jquery/dist/jquery.min.js"></script>
     <script src="assets/libs/simplebar/dist/simplebar.min.js"></script>

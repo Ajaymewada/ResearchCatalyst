@@ -1,6 +1,8 @@
 document.title = "For Reviewer";
 const sideListCls = new GenerateSideNav();
 const sideList = sideListCls.create("usefullLinks", "For Reviewers");
+const mobilesideList = sideListCls.createMobileNav();
+$(".MobileSideNavBarContainer").html(mobilesideList);
 $("#sidebarnav").html(sideList);
 
 

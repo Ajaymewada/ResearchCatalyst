@@ -1,6 +1,8 @@
 document.title = "Processing Charge";
 const sideListCls = new GenerateSideNav();
 const sideList = sideListCls.create("mainMenu", "Processing &nbsp; Charge");
+const mobilesideList = sideListCls.createMobileNav();
+$(".MobileSideNavBarContainer").html(mobilesideList);
 $("#sidebarnav").html(sideList);
 
 // Usage

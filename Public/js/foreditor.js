@@ -1,6 +1,8 @@
 document.title = "For Editor";
 const sideListCls = new GenerateSideNav();
 const sideList = sideListCls.create("usefullLinks", "For Editors");
+const mobilesideList = sideListCls.createMobileNav();
+$(".MobileSideNavBarContainer").html(mobilesideList);
 $("#sidebarnav").html(sideList);
 
 

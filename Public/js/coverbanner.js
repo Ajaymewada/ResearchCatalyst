@@ -109,6 +109,8 @@
 document.title = "Cover Banner";
 const sideListCls = new GenerateSideNav();
 const sideList = sideListCls.create("mainMenu", "Cover Banner");
+const mobilesideList = sideListCls.createMobileNav();
+$(".MobileSideNavBarContainer").html(mobilesideList);
 $("#sidebarnav").html(sideList);
 
 //   const dragDropArea = document.getElementById('dragDropArea');

@@ -1,5 +1,7 @@
 const sideListCls = new GenerateSideNav();
 const sideList = sideListCls.create("mainMenu", "Editors &nbsp; Management");
+const mobilesideList = sideListCls.createMobileNav();
+$(".MobileSideNavBarContainer").html(mobilesideList);
 $("#sidebarnav").html(sideList);
 
 let sourceID1 = "authorBioID"

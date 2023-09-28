@@ -16,7 +16,7 @@
     <div class="preloader d-none">
         <img src="assets/images/profile/logo-dark.png" alt="loader" class="lds-ripple img-fluid">
     </div>
-    
+
     <!--  Body Wrapper -->
     <div class="page-wrapper" id="main-wrapper" data-theme="blue_theme" data-layout="vertical" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed">
@@ -144,7 +144,8 @@
             </div>
         </div>
     </div>
-
+    {% include './MobileSideNavbar.html' %}
+    {% block MobileSideNavbar %}{% endblock %}
     <!-- JS FILES -->
     <script src="assets/libs/jquery/dist/jquery.min.js"></script>
     <script src="assets/libs/simplebar/dist/simplebar.min.js"></script>

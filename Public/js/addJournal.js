@@ -27,7 +27,8 @@ aboutjournal.initEditor(sourceID1);
 
 const sideListCls = new GenerateSideNav();
 const sideList = sideListCls.create("mainMenu", "Add Journal");
-$("#sidebarnav").html(sideList);
+const mobilesideList = sideListCls.createMobileNav();
+$(".MobileSideNavBarContainer").html(mobilesideList);
 
 document.title = "Journal";
 

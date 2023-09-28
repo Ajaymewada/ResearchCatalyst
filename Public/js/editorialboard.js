@@ -1,6 +1,8 @@
 document.title = "Editorial Board";
 const sideListCls = new GenerateSideNav();
 const sideList = sideListCls.create("mainMenu", "Editorial &nbsp; Board");
+const mobilesideList = sideListCls.createMobileNav();
+$(".MobileSideNavBarContainer").html(mobilesideList);
 $("#sidebarnav").html(sideList);
 
 // var editor = CKEDITOR.replace('authorBioID', {

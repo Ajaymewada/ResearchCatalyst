@@ -1,6 +1,8 @@
 document.title = "Aims And Scope";
 const sideListCls = new GenerateSideNav();
 const sideList = sideListCls.create("mainMenu", "Aims and Scope");
+const mobilesideList = sideListCls.createMobileNav();
+$(".MobileSideNavBarContainer").html(mobilesideList);
 $("#sidebarnav").html(sideList);
 
 // Usage

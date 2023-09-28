@@ -1,6 +1,8 @@
 document.title = "Instructions For Authors";
 const sideListCls = new GenerateSideNav();
 const sideList = sideListCls.create("mainMenu", "Instructions &nbsp; For &nbsp; Authors");
+const mobilesideList = sideListCls.createMobileNav();
+$(".MobileSideNavBarContainer").html(mobilesideList);
 $("#sidebarnav").html(sideList);
 
 // Usage

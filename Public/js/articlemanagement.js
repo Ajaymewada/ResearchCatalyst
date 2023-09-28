@@ -1,6 +1,8 @@
 document.title = "Add Article";
 const sideListCls = new GenerateSideNav();
 const sideList = sideListCls.create("articlelinks", "Article Management");
+const mobilesideList = sideListCls.createMobileNav();
+$(".MobileSideNavBarContainer").html(mobilesideList);
 $("#sidebarnav").html(sideList);
 
 $('#authorNames').tagEditor({
@@ -190,15 +192,12 @@ function serachData() {
                         let articlelem = ""
                         articleslist.forEach(article => {
                             articlelem += `<tr>
-                                        <td class="ps-0">
+                                        <td class="ps-0" colspan="4">
                                             <div class="d-flex align-items-center">
                                                 <div>
-                                                    <h6 class="fw-semibold mb-1">${article.title}</h6>
+                                                    <h6 class="fw-semibold mb-1">${article.title.substr(0,30)}</h6>
                                                 </div>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0 fs-3" style="width: 200px !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${article.abstract.substr(20)}</p>
                                         </td>
                                         <td>
                                             <span style="cursor: pointer;" class="badge fw-semibold p-2 bg-light-primary text-primary" onclick="showEditorModalPopup('${article._id}')"><i class="fa-solid fa-pen-to-square"></i> Modify</span>

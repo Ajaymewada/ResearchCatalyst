@@ -62,7 +62,8 @@
             </div>
         </div>
     </div>
-
+    {% include './MobileSideNavbar.html' %}
+    {% block MobileSideNavbar %}{% endblock %}
     <!-- JS FILES -->
     <script src="assets/libs/jquery/dist/jquery.min.js"></script>
     <script src="assets/libs/simplebar/dist/simplebar.min.js"></script>
@@ -84,4 +85,5 @@
     <script src="js/ckEditorClass.js"></script>
     <script src="js/useFullLinks.js"></script>
 </body>
+
 </html>

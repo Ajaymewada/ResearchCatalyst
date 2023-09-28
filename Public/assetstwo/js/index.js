@@ -89,12 +89,25 @@ function getArticles() {
                                 authorNames += `<li><i class="icon-62"></i>${author}</li>`
                             })
                         }
+                        let trimmedTitle = article.title.substr(0, 45);
+                        console.log(trimmedTitle);
+                        console.log(article.title.length);
+                        let dots = ""
+                        if (article.title.length > 45){
+                            dots = "..."
+                        } else {
+                            dots = ""
+                        }
+                        console.log(dots);
                         articlelem += `<div class="edu-course course-style-4 course-style-8">
                                         <div class="inner">
                                             <div class="content">
-                                                <h6 class="title">
-                                                    <a href="fulltext.php">${article.title || ""}</a>
-                                                </h6>
+                                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                                    <h6 class="title">
+                                                        <a href="fulltext.php" title="${article.title}">${trimmedTitle + dots}</a>
+                                                    </h6>
+                                                    <a target="_blank" href="${article.pdffilepath}"><i class="fa-solid fa-download"></i></a>
+                                                </div>
                                                 <ul class="course-meta">
                                                     ${authorNames}
                                                 </ul>
