@@ -29,7 +29,7 @@ const sideListCls = new GenerateSideNav();
 const sideList = sideListCls.create("mainMenu", "Add Journal");
 const mobilesideList = sideListCls.createMobileNav();
 $(".MobileSideNavBarContainer").html(mobilesideList);
-
+$("#sidebarnav").html(sideList);
 document.title = "Journal";
 
 function saveData() {
