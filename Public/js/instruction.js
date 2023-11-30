@@ -11,19 +11,23 @@ let labelText1 = "Instructions" + `<span class="text-danger">*<span>`
 let sourceID2 = "descriptionID"
 let labelText2 = "Add Description" + `<span class="text-danger">*<span>`
 
-const instruction = new GenerateCkEditor();
-const description = new GenerateCkEditor();
+var instruction;
+var description;
+function ckEditorInitiator() {
+    instruction = new GenerateCkEditor();
+    description = new GenerateCkEditor();
 
-const textareaElement1 = instruction.create(sourceID1, labelText1);
-const textareaElement2 = description.create(sourceID2, labelText2);
+    const textareaElement1 = instruction.create(sourceID1, labelText1);
+    const textareaElement2 = description.create(sourceID2, labelText2);
 
-$("#instructionArea").html(textareaElement1);
-$("#descriptionArea").html(textareaElement2);
+    $("#instructionArea").html(textareaElement1);
+    $("#descriptionArea").html(textareaElement2);
+    
+    // Initialize CKEditor on the created textarea
+    instruction.initEditor(sourceID1);
+    description.initEditor(sourceID2);
+}
 
-
-// Initialize CKEditor on the created textarea
-instruction.initEditor(sourceID1);
-description.initEditor(sourceID2);
 
 $('#TagsID').tagEditor({
     delimiter: '', /* space and comma */
@@ -43,9 +47,10 @@ function getData() {
     };
     fetch(url, requestOptions)
         .then(response => response.json())
-        .then(data => {
+        .then(async data => {
             console.log(data)
             if (data != null && data.status == true && data.data != null) {
+                await ckEditorInitiator()
                 const { instructions, keywords } = data.data
                 instruction.setValue(sourceID1, instructions || "");
                 description.setValue(sourceID2, data.data.description || "");
@@ -57,6 +62,8 @@ function getData() {
                         initialTags: keywords
                     });
                 }
+            } else {
+                await ckEditorInitiator();
             }
         })
 }

@@ -11,24 +11,27 @@ let labelText1 = "Add Processing Charge" + `<span class="text-danger">*<span>`
 let sourceID2 = "descriptionID"
 let labelText2 = "Add Description" + `<span class="text-danger">*<span>`
 
-const charge = new GenerateCkEditor();
-const description = new GenerateCkEditor();
+var charge;
+var description;
+function ckEditorInitiator() {
+    charge = new GenerateCkEditor();
+    description = new GenerateCkEditor();
 
-const textareaElement1 = charge.create(sourceID1, labelText1);
-const textareaElement2 = description.create(sourceID2, labelText2);
+    const textareaElement1 = charge.create(sourceID1, labelText1);
+    const textareaElement2 = description.create(sourceID2, labelText2);
 
-$("#processingCharge").html(textareaElement1);
-$("#descriptionArea").html(textareaElement2);
+    $("#processingCharge").html(textareaElement1);
+    $("#descriptionArea").html(textareaElement2);
 
-$('#TagsID').tagEditor({
-    delimiter: '', /* space and comma */
-    forceLowercase: false,
-});
+    $('#TagsID').tagEditor({
+        delimiter: '', /* space and comma */
+        forceLowercase: false,
+    });
+    // Initialize CKEditor on the created textarea
+    charge.initEditor(sourceID1);
+    description.initEditor(sourceID2);
+}
 
-
-// Initialize CKEditor on the created textarea
-charge.initEditor(sourceID1);
-description.initEditor(sourceID2);
 
 // Get data from CKEditor instance
 // const editorData = charge.getData('editorTextArea');
@@ -54,9 +57,10 @@ function getData() {
     };
     fetch(url, requestOptions)
         .then(response => response.json())
-        .then(data => {
+        .then(async data => {
             console.log(data)
             if (data != null && data.status == true && data.data != null) {
+                await ckEditorInitiator();
                 const { processingcharge, keywords } = data.data
                 charge.setValue(sourceID1, processingcharge || "");
                 description.setValue(sourceID2, data.data.description || "");
@@ -68,6 +72,8 @@ function getData() {
                         initialTags: keywords
                     });
                 }
+            } else {
+                await ckEditorInitiator();
             }
         })
 }

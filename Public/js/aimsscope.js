@@ -11,19 +11,22 @@ let labelText1 = "Aim's And Scope" + `<span class="text-danger">*<span>`
 let sourceID2 = "descriptionID"
 let labelText2 = "Add Description" + `<span class="text-danger">*<span>`
 
-const aimscope = new GenerateCkEditor();
-const description = new GenerateCkEditor();
+var aimscope;
+var description;
+function ckEditorInitiator() {
+    aimscope = new GenerateCkEditor();
+    description = new GenerateCkEditor();
 
-const textareaElement1 = aimscope.create(sourceID1, labelText1);
-const textareaElement2 = description.create(sourceID2, labelText2);
+    const textareaElement1 = aimscope.create(sourceID1, labelText1);
+    const textareaElement2 = description.create(sourceID2, labelText2);
 
-$("#aimsscopeArea").html(textareaElement1);
-$("#descriptionArea").html(textareaElement2);
+    $("#aimsscopeArea").html(textareaElement1);
+    $("#descriptionArea").html(textareaElement2);
 
-
-// Initialize CKEditor on the created textarea
-aimscope.initEditor(sourceID1);
-description.initEditor(sourceID2);
+    // Initialize CKEditor on the created textarea
+    aimscope.initEditor(sourceID1);
+    description.initEditor(sourceID2);
+}
 
 
 $('#TagsID').tagEditor({
@@ -43,9 +46,10 @@ function getData() {
     };
     fetch(url, requestOptions)
         .then(response => response.json())
-        .then(data => {
+        .then(async data => {
             console.log(data)
             if (data && data.status == true) {
+                await ckEditorInitiator();
                 const { aimsandscope, keywords } = data.data
                 aimscope.setValue(sourceID1, aimsandscope || "");
                 description.setValue(sourceID2, data.data.description || "");
@@ -57,6 +61,8 @@ function getData() {
                         initialTags: keywords
                     });
                 }
+            } else {
+                await ckEditorInitiator();
             }
         })
 }

@@ -64,6 +64,21 @@ var articleAddLinks = [
         link: "/manage-article",
         icon: "ti ti-cards"
     },
+    {
+        title: "Create Volume",
+        link: "/create-volume",
+        icon: "ti ti-layout-sidebar"
+    },
+    {
+        title: "Issues",
+        link: "/manage-issues",
+        icon: "ti ti-table-filled"
+    },
+    {
+        title: "In Press",
+        link: "/in-press-management",
+        icon: "ti ti-file-analytics"
+    },
 ]
 class GenerateSideNav {
     constructor() {

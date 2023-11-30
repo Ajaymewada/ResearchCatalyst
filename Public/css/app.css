@@ -33,3 +33,31 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.tooltip-trigger {
+    position: relative;
+    cursor: pointer;
+}
+
+.custom-tooltip {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1;
+    width: 200px;
+    top: 30px; /* Adjust the positioning as needed */
+    left: 0;
+}
+
+.custom-tooltip::before {
+    content: '';
+    position: absolute;
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent transparent #333 transparent;
+    top: -16px;
+    left: 5px;
+}

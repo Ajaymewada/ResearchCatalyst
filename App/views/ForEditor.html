@@ -54,8 +54,13 @@
                     <div class="col-md-12 col-sm-12 col-12 my-4" id="forauthorArea"></div>
                     {% include './DescriptionAndKeywords.html' %}
                     {% block metaPart %}{% endblock %}
+                    <div class="col-md-12 col-sm-12 col-12 my-4">
+                        <label for="titleID">Title <span class="text-danger">*<span></span></label>
+                        <input type="text" class="form-control" id="titleID" placeholder="Enter The Title">
+                    </div>
                     <div class="col-md-12 col-sm-12 col-12">
-                        <button class="btn btn-primary primaryBtnCs float-end">Save</button>
+                        <div class="alert alert-danger validationalert d-none" role="alert"></div>
+                        <button class="btn btn-primary primaryBtnCs float-end" onclick="saveData()">Save</button>
                     </div>
                     <div class="col-md-12 my-5"></div>
                 </div>

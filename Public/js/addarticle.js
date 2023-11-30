@@ -10,22 +10,33 @@ $('#authorNames').tagEditor({
     forceLowercase: false,
 });
 
+$('#articleKeyWordsID').tagEditor({
+    delimiter: '',
+    forceLowercase: false,
+});
+
 let sourceID1 = "abstractionID"
 let labelText1 = "Abstraction" + `<span class="text-danger">*<span>`
 let sourceID2 = "citationID"
 let labelText2 = "Citation" + `<span class="text-danger">*<span>`
+let sourceID3 = "discriptionID"
+let labelText3 = "Discription" + `<span class="text-danger">*<span>`
 
 const abstractionTextarea = new GenerateCkEditor();
 const citationTextarea = new GenerateCkEditor();
+const discriptionTextarea = new GenerateCkEditor();
 
 const textareaElement1 = abstractionTextarea.create(sourceID1, labelText1);
 const textareaElement2 = citationTextarea.create(sourceID2, labelText2);
+const textareaElement3 = discriptionTextarea.create(sourceID3, labelText3);
 
 $("#articleAbstractContainer").html(textareaElement1);
 $("#articleCitationContainer").html(textareaElement2);
+$("#articleDiscriptionContainer").html(textareaElement3);
 
 abstractionTextarea.initEditor(sourceID1);
 citationTextarea.initEditor(sourceID2);
+discriptionTextarea.initEditor(sourceID3);
 
 function saveData() {
     const fileInput = document.getElementById('articlePDFFile');
@@ -33,7 +44,11 @@ function saveData() {
     let title = document.getElementById('articleTitle').value
     let abstract = abstractionTextarea.getData(sourceID1);
     let citation = citationTextarea.getData(sourceID2);
+    let discriptionText = discriptionTextarea.getData(sourceID3);
     let authorName = $('#authorNames').tagEditor('getTags')[0].tags;
+    let articleKeyWords = $('#articleKeyWordsID').tagEditor('getTags')[0].tags;
+    let publishedDate = $("#publishedDateID").val();
+    let articleType = $("#articleTypeID").val();
     if (title == null || title == "") {
         $(".validationalert").removeClass('d-none');
         $(".validationalert").html("Enter Title!");
@@ -46,9 +61,25 @@ function saveData() {
         $(".validationalert").removeClass('d-none');
         $(".validationalert").html("Enter Citation!");
         return;
+    } else if (articleType == null || articleType == "") {
+        $(".validationalert").removeClass('d-none');
+        $(".validationalert").html("Select Article Type!");
+        return;
+    } else if (publishedDate == null || publishedDate == "") {
+        $(".validationalert").removeClass('d-none');
+        $(".validationalert").html("Select Publish Date!");
+        return;
+    } else if (discriptionText == null || discriptionText == "") {
+        $(".validationalert").removeClass('d-none');
+        $(".validationalert").html("Enter Discription!");
+        return;
     } else if (authorName == null || authorName.length == 0) {
         $(".validationalert").removeClass('d-none');
         $(".validationalert").html("Enter Author Names!");
+        return;
+    } else if (articleKeyWords == null || articleKeyWords.length == 0) {
+        $(".validationalert").removeClass('d-none');
+        $(".validationalert").html("Enter Keywords!");
         return;
     } else if (file == null) {
         $(".validationalert").removeClass('d-none');
@@ -61,8 +92,12 @@ function saveData() {
         formData.append('files', file);
         formData.append('title', title);
         formData.append('authorNames', JSON.stringify(authorName));
+        formData.append('articlekeywords', JSON.stringify(articleKeyWords));
         formData.append('abstract', abstract);
         formData.append('citation', citation);
+        formData.append('discription', discriptionText);
+        formData.append('publisheddate', publishedDate);
+        formData.append('articletype', articleType);
         formData.append('pdffilepath', "sample.pdf");
         fetch('/addsaveArticle', {
             method: 'POST',
@@ -70,6 +105,12 @@ function saveData() {
         })
             .then(response => response.json())
             .then(data => {
+                if(data && data.status === false) {
+                    $(".validationalert").removeClass('d-none');
+                    $(".validationalert").text(data.msg || "In-press articles are reached to 5, move the article to issue!");
+                    $(".saveinprogress").addClass('d-none');
+                    return;
+                }
                 $(".validationalert").removeClass('d-none alert-danger')
                 $(".validationalert").text("Article added successfully!");
                 $(".validationalert").addClass('alert-success');
@@ -92,10 +133,19 @@ function clearForm() {
     document.getElementById('articleTitle').value = ""
     abstractionTextarea.setValue(sourceID1, "");
     citationTextarea.setValue(sourceID2, "");
+    discriptionTextarea.setValue(sourceID3, "");
     $('#authorNames').val("");
     $('#authorNames').tagEditor('destroy');
     $('#authorNames').tagEditor({
         delimiter: '',
         initialTags: []
     });
+    $('#articleKeyWordsID').val("");
+    $('#articleKeyWordsID').tagEditor('destroy');
+    $('#articleKeyWordsID').tagEditor({
+        delimiter: '',
+        initialTags: []
+    });
+    $("#publishedDateID").val("");
+    $("#articleTypeID").val("Open this select menu");
 }

@@ -30,21 +30,23 @@ citationTextarea.initEditor(sourceID2);
 $(() => {
     getData();
 })
-
+var currentPage = 1
 var articlesListGlobal = []
 function getData() {
     // $(".preloader").removeClass('d-none');
     $("#search").val("");
+    $(".paginator").show();
     $(".loader").removeClass('d-none');
     const url = '/getArticlesPaginationWise';
+    let data = {
+        pageNumber: currentPage
+    }
     const requestOptions = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            pageNumber: 1
-        })
+        body: JSON.stringify(data)
     };
     fetch(url, requestOptions)
         .then(response => response.json())
@@ -55,30 +57,64 @@ function getData() {
             if (data != null && data.status == true && data.articles != null) {
                 let articleslist = data.articles;
                 articlesListGlobal = data.articles;
-                if (articleslist.length) {
-                    let articlelem = ""
-                    articleslist.forEach(article => {
-                        // <td>
-                        //     <p class="mb-0 fs-3" style="width: 200px !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${article.abstract.substr(0, 30)}</p>
-                        // </td>
-                        articlelem += `<tr>
-                                        <td class="ps-0" colspan="4">
-                                            <div class="d-flex align-items-center">
-                                                <div>
-                                                    <h6 class="fw-semibold mb-1">${article.title.substr(0, 25) }</h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        
-                                        <td>
-                                            <span style="cursor: pointer;" class="badge fw-semibold p-2 bg-light-primary text-primary" onclick="showEditorModalPopup('${article._id}')"><i class="fa-solid fa-pen-to-square"></i> Modify</span>
-                                        </td>
-                                    </tr>`
+                if (currentPage === 1) {
+                    paginator.initPaginator({
+                        'totalPage': data.totalPages,
+                        'previousPage': 'Previous',
+                        'nextPage': 'Next',
+                        'triggerFunc': updatePaginationUI
                     });
-                    $("#articledatacontaierID").html(articlelem)
                 }
+                constructUITable(articleslist);
             }
         })
+}
+
+function updatePaginationUI() {
+    var selectdPg = $('.js-paginator').data('pageSelected');
+    if (selectdPg !== null) {
+        currentPage = selectdPg;
+        getData();
+        $('html, body').animate({
+            scrollTop: $('#articledatacontaierID').offset().top - 150
+        }, 500);
+    }
+}
+
+function constructUITable(articles) {
+    if (articles.length) {
+        let Articles = articles;
+        let tableRow = "";
+        (Articles || []).forEach((element, index) => {
+            const { title, articleID, createdAt, _id, statusflag, volumeuid, issueuid } = element;
+            if (statusflag && articleID) {
+                const newDate = new Date(createdAt);
+                let tooltipelm = "";
+                if (volumeuid && issueuid) {
+                    tooltipelm = `<span style="cursor:pointer;" class="badge fw-semibold p-2 bg-light-primary text-primary" data-bs-toggle="tooltip" data-bs-html="true" title="<p class='fs-4'>Volume: ${volumeuid.title}</p><p class='fs-4'>Issue: ${issueuid.title}</p>">${statusflag}</span>`
+                } else {
+                    tooltipelm = `<span style="cursor:pointer;" class="badge fw-semibold p-2 bg-light-primary text-primary">${statusflag}</span>`
+                }
+                tableRow += `<tr>
+                            <th scope="row">${index + 1}</th>
+                            <td>${articleID}</td>
+                            <td title="${title}">${title.substr(0, 25)}...</td>
+                            <td>${newDate.toDateString()}</td>
+                            <td>
+                                ${tooltipelm}
+                            </td>
+                            <td>
+                                <button class="btn btn-primary" onclick="showEditorModalPopup('${_id}')"><i class="fa-solid fa-pen-to-square mx-1"></i>Modify</button>
+                            </td>
+                        </tr>`      
+            }
+        });
+        $("#articledatacontaierID").html(tableRow);
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    }
 }
 
 function showEditorModalPopup(articleID) {
@@ -165,6 +201,7 @@ function modifyArticle() {
 function serachData() {
     let title = $("#search").val();
     $(".loader").removeClass('d-none');
+    $(".paginator").hide();
     if (title != null && title != "") {
         let data = {
             name: title
@@ -188,27 +225,50 @@ function serachData() {
                 if (data != null && data.status == true && data.articles != null) {
                     let articleslist = data.articles;
                     articlesListGlobal = data.articles;
-                    if (articleslist.length) {
-                        let articlelem = ""
-                        articleslist.forEach(article => {
-                            articlelem += `<tr>
-                                        <td class="ps-0" colspan="4">
-                                            <div class="d-flex align-items-center">
-                                                <div>
-                                                    <h6 class="fw-semibold mb-1">${article.title.substr(0,30)}</h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span style="cursor: pointer;" class="badge fw-semibold p-2 bg-light-primary text-primary" onclick="showEditorModalPopup('${article._id}')"><i class="fa-solid fa-pen-to-square"></i> Modify</span>
-                                        </td>
-                                    </tr>`
-                        });
-                        $("#articledatacontaierID").html(articlelem)
-                    }
+                    constructUITable(articleslist);
                 }
             })
     } else {
         getData();
     }
 }
+
+// let articlelem = ""
+// articleslist.forEach(article => {
+//     // <td>
+//     //     <p class="mb-0 fs-3" style="width: 200px !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${article.abstract.substr(0, 30)}</p>
+//     // </td>
+//     articlelem += `<tr>
+//                                         <td class="ps-0" colspan="4">
+//                                             <div class="d-flex align-items-center">
+//                                                 <div>
+//                                                     <h6 class="fw-semibold mb-1">${article.title.substr(0, 25)}</h6>
+//                                                 </div>
+//                                             </div>
+//                                         </td>
+                                        
+//                                         <td>
+//                                             <span style="cursor: pointer;" class="badge fw-semibold p-2 bg-light-primary text-primary" onclick="showEditorModalPopup('${article._id}')"><i class="fa-solid fa-pen-to-square"></i> Modify</span>
+//                                         </td>
+//                                     </tr>`
+// });
+// $("#articledatacontaierID").html(articlelem)
+
+// if (articleslist.length) {
+//     let articlelem = ""
+//     articleslist.forEach(article => {
+//         articlelem += `<tr>
+//                                         <td class="ps-0" colspan="4">
+//                                             <div class="d-flex align-items-center">
+//                                                 <div>
+//                                                     <h6 class="fw-semibold mb-1">${article.title.substr(0, 30)}</h6>
+//                                                 </div>
+//                                             </div>
+//                                         </td>
+//                                         <td>
+//                                             <span style="cursor: pointer;" class="badge fw-semibold p-2 bg-light-primary text-primary" onclick="showEditorModalPopup('${article._id}')"><i class="fa-solid fa-pen-to-square"></i> Modify</span>
+//                                         </td>
+//                                     </tr>`
+//     });
+//     $("#articledatacontaierID").html(articlelem)
+// }

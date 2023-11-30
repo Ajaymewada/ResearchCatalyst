@@ -90,36 +90,65 @@
                                             <div
                                                 class="d-sm-flex d-block align-items-center justify-content-between mb-7">
                                                 <div class="mb-3 mb-sm-0">
-                                                    <h5 class="card-title fw-semibold">Articles Management</h5>
-                                                    <p class="card-subtitle mb-0">Manage the article data</p>
+                                                    <h5 class="card-title fw-semibold">Issues</h5>
+                                                    <p class="card-subtitle mb-0">Manage Issues</p>
                                                 </div>
-                                                <div class="mx-4"
-                                                    style="display: flex; align-items: center; justify-content: center; width: 400px;">
+                                                <div
+                                                    style="display: flex; align-items: center; justify-content: space-between; width: 420px;">
                                                     <input type="text" class="form-control fs-3"
-                                                        placeholder="Search By Name" id="search"
-                                                        style="margin-right: 10px;">
+                                                        placeholder="Search By Name" id="search" style="width: 208px;">
                                                     <div style="cursor: pointer;" onclick="serachData()">
                                                         <i class="ti ti-search"></i>
                                                     </div>
+                                                    <div style="width: 150px;">
+                                                        <button class="btn btn-primary" onclick="createIssueHandler()">Create Issues</button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <p style="float: right; margin-top: -25px; margin-right: 25px; cursor: pointer; display: inline; color: red;"
-                                                onclick="getData()">Clear Search</p>
+                                            <p style="float: right;margin-top: -30px;margin-right: 212px;cursor: pointer;display: inline;color: red;"
+                                                onclick="getAllIssues()">Clear Search</p>
                                             <div class="table-responsive w-100">
                                                 <table class="table table-striped">
                                                     <thead>
                                                         <tr>
                                                             <th scope="col">#</th>
-                                                            <th scope="col">ArticleID</th>
+                                                            <th scope="col">IssueID</th>
                                                             <th scope="col">Title</th>
                                                             <th scope="col">CreatedAt</th>
-                                                            <th scope="col">Status</th>
+                                                            <th scope="col">Linked To</th>
                                                             <th scope="col">Action</th>
+                                                            <th scope="col">Articles</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody id="articledatacontaierID"></tbody>
+                                                    <tbody id="issuetBodyContainer">
+                                                        <tr>
+                                                            <th scope="row">1</th>
+                                                            <td>ISS001</td>
+                                                            <td>Issue1</td>
+                                                            <td>
+                                                                <button class="btn btn-primary" onclick="modifyIssue()">Modify</button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">2</th>
+                                                            <td>ISS002</td>
+                                                            <td>Issue2</td>
+                                                            <td>
+                                                                <button class="btn btn-primary" onclick="modifyIssue()">Modify</button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">3</th>
+                                                            <td>ISS003</td>
+                                                            <td>Issue3</td>
+                                                            <td>
+                                                                <button class="btn btn-primary" onclick="modifyIssue()">Modify</button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
                                                 </table>
-                                                <div class="paginator js-paginator mx-4" style="float: right;margin-top: 40px;"></div>
+                                                <div class="paginator js-paginator" style="float: right;margin-top: 40px;">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -131,43 +160,66 @@
             </div>
         </div>
     </div>
-    <div class="modal" tabindex="-1" id="articledetailsModalID">
+
+    <div class="modal" tabindex="-1" id="createIssueModalID">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modify Article</h5>
+                    <h5 class="modal-title">Create Issue</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-12 my-4">
-                            <label for="">Article Title <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="articleTitle">
+                            <label for="">Title<span class="text-danger">*</span>:</label>
+                            <input type="text" class="form-control" id="IssueTitle">
                         </div>
                         <div class="col-md-12 col-sm-12 col-12 my-4">
-                            <label for="">Author Names <span class="text-danger">*</span></label>
-                            <input type="text" id="authorNames">
+                            <label for="">Body :</label>
+                            <textarea id="IssueBody" class="form-control" rows="5"></textarea>
                         </div>
-
-                        <div class="col-md-12 my-4" id="articleAbstractContainer"></div>
-                        <div class="col-md-12 my-4" id="articleCitationContainer"></div>
+                        <div class="col-md-12 col-sm-12 col-12 my-4">
+                            <label for="">Select Volume :</label>
+                            <select name="" id="selectedVolume" class="form-select" aria-label="Default select example">
+                                <option selected>Open this select menu</option>
+                                <option value="Volume1">Volume 1</option>
+                                <option value="Volume2">Volume 2</option>
+                                <option value="Volume3">Volume 3</option>
+                            </select>
+                        </div>
                         <div class="col-md-12">
                             <div class="alert alert-danger validationalert d-none" role="alert"></div>
                         </div>
-                        <div class="col-12 my-4"></div>
+                        <div class="col-12 my-4 emergencymsg"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" style="height: 45px;" class="btn btn-secondary"
                         data-bs-dismiss="modal">Close</button>
                     <button id="modifyEditorID" editorid="" class="btn btn-primary float-end primaryBtnCs"
-                        onclick="modifyArticle()"
+                        onclick="createIssue()"
                         style="display: flex;align-items: center;justify-content: space-between;">
-                        <span style="margin-right: 10px;">Save Changes</span>
+                        <span style="margin-right: 10px;">Save</span>
                         <div class="spinner-border text-light saveinprogress d-none" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" id="viewArticlesModalID">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Articles</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalArticlesContainer"></div>
+                <div class="modal-footer">
+                    <button type="button" style="height: 45px;" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -194,10 +246,10 @@
     <script src="assets/jQuery-tagEditor-master/jquery.tag-editor.min.js"></script>
     <script src="plugins/flexible-paginator/paginator.min.js"></script>
     <script src="plugins/fontawesome/js/all.min.js"></script>
-    <script src="js/common.js"></script>
     <script src="js/ckEditorClass.js"></script>
+    <script src="js/common.js"></script>
     <script src="js/sideNavCreater.js"></script>
-    <script src="js/articlemanagement.js"></script>
+    <script src="js/issuesManagement.js"></script>
 </body>
 
 </html>

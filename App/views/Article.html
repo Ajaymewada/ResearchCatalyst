@@ -89,9 +89,28 @@
                                 <label for="">Author Names <span class="text-danger">*</span></label>
                                 <input type="text" id="authorNames">
                             </div>
-
+                            <div class="col-md-6 col-sm-12 col-12 my-4">
+                                <label for="">Article publishied Date<span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" id="publishedDateID">
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-12 my-4">
+                                <label for="">Article Type<span class="text-danger">*</span></label>
+                                <select name="typesOfArticles" class="form-select" id="articleTypeID">
+                                    <option selected>Open this select menu</option>
+                                    <option value="Original Research">Original Research</option>
+                                    <option value="Short reports or Letters">Short reports or Letters</option>
+                                    <option value="Review Articles">Review Articles</option>
+                                    <option value="Case Studies">Case Studies</option>
+                                    <option value="Methodologies or Methods">Methodologies or Methods</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-12 my-4">
+                                <label for="">Key Words <span class="text-danger">*</span></label>
+                                <input type="text" id="articleKeyWordsID">
+                            </div>
                             <div class="col-md-12 my-4" id="articleAbstractContainer"></div>
                             <div class="col-md-12 my-4" id="articleCitationContainer"></div>
+                            <div class="col-md-12 my-4" id="articleDiscriptionContainer"></div>
                             <div class="col-md-6 col-sm-12 col-12 my-4">
                                 <label for="">Upload PDF <span class="text-danger">*</span></label>
                                 <input type="file" accept=".pdf" class="form-control" id="articlePDFFile">

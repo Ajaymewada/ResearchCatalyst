@@ -10,7 +10,11 @@ var processingcharge = require('../App/controllers/processingcharge')
 const multer = require('multer');
 var authMiddleware = require('../App/middleware/auth')
 const BlacklistedToken = require("../App/Modals/blacklistedToken");
-
+const addForAuthors = require("../App/controllers/addForAuthors");
+const addForEditors = require("../App/controllers/addForEditors");
+const addForReviewers = require("../App/controllers/addForReviewers");
+const volumeController = require("../App/controllers/volumeController");
+const IssueController = require("../App/controllers/issuesController");
 
 router.get('/', function (req, res) {
     res.render('index');
@@ -70,6 +74,18 @@ router.get('/editors-management', authMiddleware, function (req, res) {
     res.render('EditorsManagement');
 })
 
+router.get('/create-volume', authMiddleware, function (req, res) {
+    res.render('Volume');
+})
+
+router.get('/manage-issues', authMiddleware, function (req, res) {
+    res.render('Issues');
+})
+
+router.get('/in-press-management', authMiddleware, function (req, res) {
+    res.render('InPressView');
+})
+
 router.get('/author-guide', function (req, res) {
     res.render('MainAuthorGuide');
 })
@@ -80,6 +96,18 @@ router.get('/article-processing-fee', function (req, res) {
 
 router.get('/editorial-office', function (req, res) {
     res.render('MainContactUs');
+})
+
+router.get('/for-editors', function (req, res) {
+    res.render('MainForEditors');
+})
+
+router.get('/for-authors', function (req, res) {
+    res.render('MainForAuthor');
+})
+
+router.get('/for-reviewers', function (req, res) {
+    res.render('MainForReviewers');
 })
 
 // LOADS ADMIN LOGIN PAGE
@@ -148,8 +176,37 @@ router.post('/addupdateArticle', addarticle.updateArticle);
 router.get('/getAllArticle', addarticle.getAticles);
 router.post('/getArticlesPaginationWise', addarticle.getArticlesPaginationWise);
 router.post('/searchArticle', addarticle.searchArticle);
+router.post('/movearticletoIssue', addarticle.movearticletoIssue);
+router.get('/getInPressArticles', addarticle.getInPressArticles);
 // Article Related Link End
 
+// For Author Editor Reviewer Links
+// Author
+router.post('/saveOrUpdateForAuthor', addForAuthors.saveOrUpdateForAuthor);
+router.get('/getDocumentForAuthor', addForAuthors.getDocumentForAuthor);
+// Editor
+router.post('/saveOrUpdateFirstEditorDocument', addForEditors.saveOrUpdateFirstEditorDocument);
+router.get('/getFirstEditorDocument', addForEditors.getFirstEditorDocument);
+// Reviewer
+router.post('/saveOrUpdateFirstReviewerDocument', addForReviewers.saveOrUpdateFirstReviewerDocument);
+router.get('/getFirstReviewerDocument', addForReviewers.getFirstReviewerDocument);
+
+// VOLUME ROUTES
+router.post("/createVolume", volumeController.createVolume);
+router.post("/updateVolumeById", volumeController.updateVolumeById);
+router.get("/getAllVolumes", volumeController.getAllVolumes);
+router.post("/getVolumesWithPagination", volumeController.getVolumesWithPagination);
+router.post("/searchVolumesByTitleOrID", volumeController.searchVolumesByTitleOrID);
+
+
+// ISSUE ROUTES
+router.post("/createIssue", IssueController.createIssue);
+router.post("/updateIssueById", IssueController.updateIssueById);
+router.post("/getAllIssues", IssueController.getAllIssues);
+router.post("/getIssuesWithPagination", IssueController.getIssuesWithPagination);
+router.post("/searchIssuesByTitleOrID", IssueController.searchIssuesByTitleOrID);
+router.post("/getIssuesByVolumeId", IssueController.getIssuesByVolumeId);
+router.post("/getArticlesByIssueId", IssueController.getArticlesByIssueId);
 // Logout route
 router.post('/logout', async (req, res) => {
     try {

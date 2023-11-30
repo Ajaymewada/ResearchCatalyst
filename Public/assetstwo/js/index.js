@@ -73,8 +73,8 @@ function getArticles() {
                 if (currentPage === 1) {
                     paginator.initPaginator({
                         'totalPage': Math.ceil(totalDocuments / perPage),
-                        'previousPage': 'Next',
-                        'nextPage': 'Previous',
+                        'previousPage': 'Previous',
+                        'nextPage': 'Next', 
                         'triggerFunc': updatePaginationUI
                     });
                 }

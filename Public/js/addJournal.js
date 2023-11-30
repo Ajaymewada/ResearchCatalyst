@@ -1,29 +1,20 @@
-// var editor = CKEDITOR.replace('aboutJournalID', {
-//     // height: 350
-// });
+
 $(document).ready(async function () {
     console.log("ready!");
-    getData();
+    await getData();
 });
+
 // Usage
 let sourceID1 = "aboutJournalID"
 let labelText1 = "About Journal" + `<span class="text-danger">*<span>`
-// let sourceID2 = "descriptionID"
-// let labelText2 = "Add Description" + `<span class="text-danger">*<span>`
-
-const aboutjournal = new GenerateCkEditor();
-// const description = new GenerateCkEditor();
-
-const textareaElement1 = aboutjournal.create(sourceID1, labelText1);
-// const textareaElement2 = description.create(sourceID2, labelText2);
-
-$("#aboutJournalContainer").html(textareaElement1);
-// $("#descriptionArea").html(textareaElement2);
-
-
-// Initialize CKEditor on the created textarea
-aboutjournal.initEditor(sourceID1);
-// description.initEditor(sourceID2);
+var aboutjournal;
+var textareaElement1;
+function ckEditorEmbark() {
+    aboutjournal = new GenerateCkEditor();
+    textareaElement1 = aboutjournal.create(sourceID1, labelText1);
+    $("#aboutJournalContainer").html(textareaElement1);
+    aboutjournal.initEditor(sourceID1);
+}
 
 const sideListCls = new GenerateSideNav();
 const sideList = sideListCls.create("mainMenu", "Add Journal");
@@ -114,14 +105,25 @@ function getData() {
     };
     fetch(url, requestOptions)
         .then(response => response.json())
-        .then(data => {
+        .then(async data => {
             console.log(data)
             if (data && data.status == true) {
+                await ckEditorEmbark();
                 const { about, issn, name } = data.data
                 document.getElementById("journalTitle").value = name;
                 document.getElementById("issnNumber").value = issn;
                 aboutjournal.setValue(sourceID1, about);
                 // $("#issnNumber").prop('disabled', true);
+            } else{
+                await ckEditorEmbark();
             }
         })
 }
+
+// let sourceID2 = "descriptionID"
+// let labelText2 = "Add Description" + `<span class="text-danger">*<span>`
+// const description = new GenerateCkEditor();
+// const textareaElement2 = description.create(sourceID2, labelText2);
+// $("#descriptionArea").html(textareaElement2);
+// Initialize CKEditor on the created textarea
+// description.initEditor(sourceID2);
